@@ -1,0 +1,315 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width" />
+      <title>사이트 소개</title>
+      <link rel="stylesheet" href="{% static 'myapp/css/components.css' %}">
+      <link rel="stylesheet" href="{% static 'myapp/css/responsee.css' %}">
+      <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
+      <!--이거 포함하면 틀 이상해짐
+      <link rel="stylesheet" href="{% static 'myapp/owl-carousel/owl.carousel.css' %}">
+      <link rel="stylesheet" href="{% static 'myapp/owl-carousel/owl.theme.css' %}">-->
+      <!-- CUSTOM STYLE -->  
+      <link rel="stylesheet" href="{% static 'myapp/css/template-style.css' %}">
+      <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+      <script type="text/javascript" src="{% static 'myapp/js/jquery-1.8.3.min.js' %}"></script>
+      <script type="text/javascript" src="{% static 'myapp/js/jquery-ui.min.js' %}"></script>    
+      <script type="text/javascript" src="{% static 'myapp/js/modernizr' %}"></script>
+      <script type="text/javascript" src="{% static 'myapp/js/responsee.js' %}"></script>  
+      <!--[if lt IE 9]>
+	      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+      <![endif]-->
+  <style> 
+    video, img {
+      max-width: 70%;
+      max-height: 70%;
+    }
+  </style>
+</head>
+<body>
+	<header>
+         <nav>
+            <div class="line">
+               <div class="top-nav">              
+                  <div class="logo hide-l">
+                     <a>캡스톤 <br /><strong>5조</strong></a>
+                  </div>                  
+                  <p class="nav-text">Custom menu text</p>
+                  <div class="top-nav s-12 l-5">
+                     <ul class="right top-ul chevron">
+                        <li><a href="../myapp/main.html">메인</a>
+                        </li>
+                        <li><a href="../myapp/intro.html">프로젝트 소개</a>
+                        </li>
+                     </ul>
+                  </div>
+                  <ul class="s-12 l-2">
+                     <li class="logo hide-s hide-m">
+                        <a>KMU Capstone<br /><strong>TEAM 5</strong></a>
+                     </li>
+                  </ul>
+                  <div class="top-nav s-12 l-5">
+                     <ul class="top-ul chevron">
+                        <li><a href="../myapp/webcam.html">카메라...</a>
+                        </li>
+                        <li>
+                           <a href="../myapp/undecided.html">옷...</a>            
+                           <ul>
+                              <li><a>Company 1</a>
+                              </li>
+                              <li><a>Company 2</a>
+                              </li>
+                              <li>
+                                 <a>Company 3</a>             
+                                 <ul>
+                                    <li><a>Company 3-1</a>
+                                    </li>
+                                    <li><a>Company 3-2</a>
+                                    </li>
+                                    <li><a>Company 3-3</a>
+                                    </li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </li>
+                     </ul> 
+                  </div>
+               </div>
+            </div>
+         </nav>
+      </header>
+
+	<section>
+         <div id="head">
+            <div class="line">
+               <h1>COLOR CHANGE</h1>
+            </div>
+         </div>
+         <div id="content">
+            <div class="line"></div>
+         </div>
+         <!-- 타이틀 텍스트 -->	
+         <div style="text-align: center; font-size: 70pt; font-family: 'mfg';">
+         	<p class="titile">Color Change</p>
+         </div>
+         <div id="third-block">
+            <div class="line">
+               <div class="margin">
+                  <div class="s-12 m-12 l-6">
+                     <video autoplay></video>                     
+                  </div>
+                  <div class="s-12 m-12 l-6">             
+                     <img src="{% static 'myapp/img/blank.png' %}">     
+                  </div>                 
+                  
+               </div>
+            </div>
+         </div>
+         <!-- 타이머 및 캡쳐 버튼 설정-->
+		 	<section class="grey">
+		      <div class="container">
+			     <select id = "timerValue">
+		  			<option value="3">3</option>
+		  			<option value="5">5</option>
+		  			<option value="7">7</option>
+				 </select>
+				 <input type="button" class="contact-button" id="captureBtn" value="사진 찍기" />
+		        <div class="flex">		     
+		          <div class="social-media"><a href="#">TEST</a></div>
+		        </div>
+		      </div>
+		    </section>
+
+		 <!-- 타이머 캡쳐 구현-->
+			<script type="text/javascript">				
+			 	var t = document.getElementById('captureBtn');
+			 	var video = document.querySelector('video'), canvas;
+			 			 	
+				// 사진찍기 클릭 시 설정 시간 확인 후 사진 찍기
+				t.addEventListener('click',function(){
+					// 선택된 값 찾기
+			 		var sVal = document.getElementById('timerValue')
+			 		var strUser = sVal.options[sVal.selectedIndex].value;
+
+			 		// 타이머
+					if(strUser == '3') setTimeout(takeSnapshot, 3000);
+					else if(strUser == '5') setTimeout(takeSnapshot, 5000);
+					else if(strUser == '7') setTimeout(takeSnapshot, 7000);
+				})
+
+				function takeSnapshot() {
+					var img = document.querySelector('img') || document.createElement('img');
+					var context;
+					var width = video.offsetWidth
+					, height = video.offsetHeight;
+
+					canvas = canvas || document.createElement('canvas');
+					canvas.width = width;
+					canvas.height = height;
+					context = canvas.getContext('2d');
+					context.drawImage(video, 0, 0, width, height);
+
+					img.src = canvas.toDataURL('image/png');
+				}			
+			</script>
+    </section>
+
+	<script>		
+		// 비디오 스트리밍
+		'use strict';
+		var video = document.querySelector('video')
+		, canvas;
+		// use MediaDevices API
+		if (navigator.mediaDevices) {
+			// access the web cam
+			navigator.mediaDevices.getUserMedia({video: true})
+			// permission granted:
+			.then(function(stream) {
+				video.src = window.URL.createObjectURL(stream);
+			})
+			// permission denied:
+			.catch(function(error) {
+				document.body.textContent = 'Could not access the camera. Error: ' + error.name;
+			});
+		}		
+	</script>
+
+
+<script type="text/javascript">
+    var canvas, ctx, flag = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+        dot_flag = false;
+
+    var x = "black",
+        y = 2;
+    
+    function init() {
+        canvas = document.getElementById('can');
+        ctx = canvas.getContext("2d");
+        w = canvas.width;
+        h = canvas.height;
+    
+        canvas.addEventListener("mousemove", function (e) {
+            findxy('move', e)
+        }, false);
+        canvas.addEventListener("mousedown", function (e) {
+            findxy('down', e)
+        }, false);
+        canvas.addEventListener("mouseup", function (e) {
+            findxy('up', e)
+        }, false);
+        canvas.addEventListener("mouseout", function (e) {
+            findxy('out', e)
+        }, false);
+    }
+    
+    function color(obj) {
+        switch (obj.id) {
+            case "green":
+                x = "green";
+                break;
+            case "blue":
+                x = "blue";
+                break;
+            case "red":
+                x = "red";
+                break;
+            case "yellow":
+                x = "yellow";
+                break;
+            case "orange":
+                x = "orange";
+                break;
+            case "white":
+                x = "white";
+                break;
+        }
+        if (x == "white") y = 14;
+        else y = 2;
+    
+    }
+    
+    function draw() {
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
+    }
+    
+    function erase() {
+        var m = confirm("Want to clear");
+        if (m) {
+            ctx.clearRect(0, 0, w, h);
+            document.getElementById("canvasimg").style.display = "none";
+        }
+    }
+    
+    function save() {
+        document.getElementById("canvasimg").style.border = "2px solid";
+        var dataURL = canvas.toDataURL();
+        document.getElementById("canvasimg").src = dataURL;
+        document.getElementById("canvasimg").style.display = "inline";
+    }
+    
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+    
+            flag = true;
+            dot_flag = true;
+            if (dot_flag) {
+                ctx.beginPath();
+                ctx.fillStyle = x;
+                ctx.fillRect(currX, currY, 2, 2);
+                ctx.closePath();
+                dot_flag = false;
+            }
+        }
+        if (res == 'up' || res == "out") {
+            flag = false;
+        }
+        if (res == 'move') {
+            if (flag) {
+                prevX = currX;
+                prevY = currY;
+                currX = e.clientX - canvas.offsetLeft;
+                currY = e.clientY - canvas.offsetTop;
+                draw();
+            }
+        }
+    }
+    </script>
+    <!--
+    <body onload="init()">
+        <canvas id="can" width="400" height="400" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
+        <div style="position:absolute;top:12%;left:43%;">Choose Color</div>
+        <div style="position:absolute;top:15%;left:45%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
+        <div style="position:absolute;top:15%;left:46%;width:10px;height:10px;background:blue;" id="blue" onclick="color(this)"></div>
+        <div style="position:absolute;top:15%;left:47%;width:10px;height:10px;background:red;" id="red" onclick="color(this)"></div>
+        <div style="position:absolute;top:17%;left:45%;width:10px;height:10px;background:yellow;" id="yellow" onclick="color(this)"></div>
+        <div style="position:absolute;top:17%;left:46%;width:10px;height:10px;background:orange;" id="orange" onclick="color(this)"></div>
+        <div style="position:absolute;top:20%;left:43%;">Eraser</div>
+        <div style="position:absolute;top:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
+        <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
+        <input type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;top:55%;left:10%;">
+        <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:55%;left:15%;">
+    </body>
+-->
+
+
+
+</body>
+</html>
